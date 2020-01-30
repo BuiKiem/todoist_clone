@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Typography, Tooltip } from "@material-ui/core";
+import { FiberManualRecord as RadioButtonUncheckedIcon } from "@material-ui/icons";
 
 export const Task = () => {
   return (
@@ -12,11 +13,16 @@ export const Task = () => {
           [Task name]
         </Typography>
         <Tooltip color="primary" title="31 Jan" arrow placement="bottom-start">
-          <Typography variant="body2" component="p">[Due day]</Typography>
+          <Typography variant="body2" component="p">
+            [Due day]
+          </Typography>
         </Tooltip>
       </Grid>
       <Grid item xs={6}>
-        <Typography variant="body2" component="p">[Project name]</Typography>
+        <Typography variant="body2" component="p">
+          [Project name]
+          <RadioButtonUncheckedIcon color="primary" fontSize="small" viewBox="0 0 24 24" />
+        </Typography>
       </Grid>
     </Grid>
   );
