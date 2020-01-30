@@ -1,13 +1,15 @@
 import React from "react";
-import { CssBaseline, Typography, ThemeProvider } from "@material-ui/core";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
 
 import { theme } from "./theme";
+
+import { AppBar } from "./components/AppBar/AppBar";
 
 function App() {
   return (
     <CssBaseline>
       <ThemeProvider theme={theme}>
-        <Typography variant="h1">Todoist Clone</Typography>
+        <AppBar />
       </ThemeProvider>
     </CssBaseline>
   );
