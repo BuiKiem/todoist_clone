@@ -4,14 +4,13 @@ from . import models
 
 
 class ProjectRetrieveSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Project
         fields = ("id", "name", "color", "status")
+        read_only_fields = ("id", "name", "color", "status")
 
 
 class ProjectCreateSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.Project
         fields = ("name", "color")

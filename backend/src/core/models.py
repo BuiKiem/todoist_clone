@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Project(models.Model):
-
     class Color(models.TextChoices):
         RED = "#f44336", "red"
         PINK = "#e91e63", "pink"
@@ -16,8 +15,16 @@ class Project(models.Model):
         ARCHIVED = "archived", "archived"
 
     name = models.CharField(max_length=255, blank=False, null=False, default="")
-    color = models.CharField(max_length=10, blank=False, null=False, choices=Color.choices, default=Color.RED)
-    status = models.CharField(max_length=10, blank=False, null=False, choices=Status.choices, default=Status.OPENED)
+    color = models.CharField(
+        max_length=10, blank=False, null=False, choices=Color.choices, default=Color.RED
+    )
+    status = models.CharField(
+        max_length=10,
+        blank=False,
+        null=False,
+        choices=Status.choices,
+        default=Status.OPENED,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
