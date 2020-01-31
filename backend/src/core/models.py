@@ -1,4 +1,10 @@
+import datetime
+
 from django.db import models
+
+
+def get_tomorrow_date():
+    return datetime.datetime.now() + datetime.timedelta(days=1)
 
 
 class Project(models.Model):
@@ -29,3 +35,27 @@ class Project(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class Task(models.Model):
+
+    class Status(models.TextChoices):
+        ON_GOING = "ongoing", "Ongoing"
+        OVERDUE = "overdue", "Overdue"
+        COMPLETED = "completed", "Completed"
+
+    name = models.CharField(max_length=255, blank=False, null=False, default="")
+    due_time = models.DateTimeField(blank=False, null=False, default=get_tomorrow_date)
+    status = models.CharField(
+        max_length=10,
+        blank=False,
+        null=False,
+        choices=Status.choices,
+        default=Status.ON_GOING,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    project = models.ForeignKey("Project", on_delete=models.CASCADE, related_name="tasks")
+
+    def __str__(self) -> str:
+        return f"{self.name} | {self.project.name}"
