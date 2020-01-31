@@ -38,7 +38,6 @@ class Project(models.Model):
 
 
 class Task(models.Model):
-
     class Status(models.TextChoices):
         ON_GOING = "ongoing", "Ongoing"
         OVERDUE = "overdue", "Overdue"
@@ -55,7 +54,9 @@ class Task(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
-    project = models.ForeignKey("Project", on_delete=models.CASCADE, related_name="tasks")
+    project = models.ForeignKey(
+        "Project", on_delete=models.CASCADE, related_name="tasks"
+    )
 
     def __str__(self) -> str:
         return f"{self.name} | {self.project.name}"

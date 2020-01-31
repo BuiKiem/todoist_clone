@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "django_filters",
     "core.apps.CoreConfig",
 ]
 
@@ -107,10 +108,25 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+# TODO: Set to True when moving to PostgreSQL
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = "/static/"
+
+
+LOGGING = {
+    "version": 1,
+    "filters": {"require_debug_true": {"()": "django.utils.log.RequireDebugTrue",}},
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        }
+    },
+    "loggers": {"django.db.backends": {"level": "DEBUG", "handlers": ["console"],}},
+}

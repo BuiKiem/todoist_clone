@@ -9,6 +9,7 @@ verify_ssl = true
 django = "*"
 black = "*"
 djangorestframework = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.7"
