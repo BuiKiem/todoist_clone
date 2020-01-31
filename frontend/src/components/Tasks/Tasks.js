@@ -4,26 +4,27 @@ import { axiosConn } from "../../axios";
 import { Task } from "../Task/Task";
 
 export const Tasks = () => {
-  const [tasks, setTasks] = useState(null);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
+      setLoading(true);
       const result = await axiosConn.get("api/tasks/");
-      console.log(result);
       setTasks(result.data);
+      setLoading(false);
     };
 
     fetchTasks();
   }, []);
 
-  if (!tasks) {
-    return <div>Loading...</div>;
-  }
   return (
     <div>
-      {tasks.map(task => (
-        <Task key={task.id} task={task} />
-      ))}
+      {loading ? (
+        <div>Loading...</div>
+      ) : (
+        tasks.map(task => <Task key={task.id} task={task} />)
+      )}
     </div>
   );
 };
