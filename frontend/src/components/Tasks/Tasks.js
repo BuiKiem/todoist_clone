@@ -9,13 +9,21 @@ import { TasksSkeleton } from "./Tasks.skeleton";
 export const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchTasks = async () => {
       setLoading(true);
-      const result = await axiosConn.get("api/tasks/");
+      setError(false);
+      try {
+              const result = await axiosConn.get("api/tasks/");
       setTasks(result.data);
-      setLoading(false);
+
+      } catch (e) {
+        setError(true)
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchTasks();
@@ -23,6 +31,7 @@ export const Tasks = () => {
 
   return (
     <List subheader={<h2>[Project Name]</h2>}>
+      {error && <p>Something went wrong</p>}
       {loading ? (
         <TasksSkeleton />
       ) : (
