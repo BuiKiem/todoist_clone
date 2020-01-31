@@ -10,21 +10,26 @@ class CustomDateRangeFilter(rest_framework.DateRangeFilter):
      - today
      - week: Next 7 days (including today)
     """
+
     choices = [
-        ('today', 'Today'),
-        ('week', 'Next 7 days'),
+        ("today", "Today"),
+        ("week", "Next 7 days"),
     ]
 
     filters = {
-        'today': lambda qs, name: qs.filter(**{
-            '%s__year' % name: now().year,
-            '%s__month' % name: now().month,
-            '%s__day' % name: now().day
-        }),
-        'week': lambda qs, name: qs.filter(**{
-            '%s__gte' % name: now().date(),
-            '%s__lt' % name: now().date() + timedelta(days=7),
-        }),
+        "today": lambda qs, name: qs.filter(
+            **{
+                "%s__year" % name: now().year,
+                "%s__month" % name: now().month,
+                "%s__day" % name: now().day,
+            }
+        ),
+        "week": lambda qs, name: qs.filter(
+            **{
+                "%s__gte" % name: now().date(),
+                "%s__lt" % name: now().date() + timedelta(days=7),
+            }
+        ),
     }
 
 
