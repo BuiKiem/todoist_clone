@@ -54,3 +54,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return self.serializer_classes[self.action]
 
 
+class TaskViewSet(viewsets.ModelViewSet):
+    http_method_names = ["get"]
+    queryset = models.Task.objects.all()
+    serializer_class = serializers.TaskResponseSerializer
