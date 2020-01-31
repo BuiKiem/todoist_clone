@@ -1,11 +1,11 @@
 import datetime
 
+import django_filters
 from rest_framework import viewsets, status
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from . import models
-from . import serializers
+from . import models, serializers, filters
 
 
 class CustomModelViewSet(viewsets.ModelViewSet):
@@ -68,12 +68,6 @@ class TaskViewSet(CustomModelViewSet):
         "update": serializers.TaskUpdateSerializer,
         "partial_update": serializers.TaskUpdateSerializer
     }
+    filter_backends = (django_filters.rest_framework.DjangoFilterBackend, )
+    filterset_class = filters.TaskFilter
 
-    def get_queryset(self):
-        queryset = models.Task.objects.all()
-        due_day = self.request.query_params.get("due_day", None)
-        if due_day == "today":
-            queryset = queryset.filter(due_time__date=datetime.date.today())
-        if due_day == "next7":
-            queryset = queryset.filter(due_time__date__lte=(datetime.date.today() + datetime.timedelta(days=7)))
-        return queryset
