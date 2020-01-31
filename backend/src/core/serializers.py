@@ -27,3 +27,15 @@ class TaskResponseSerializer(serializers.ModelSerializer):
         model = models.Task
         fields = ("id", "name", "due_time", "status", "project")
         read_only_fields = fields
+
+
+class TaskCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Task
+        fields = ("name", "due_time", "project")
+
+
+class TaskUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Task
+        fields = ("name", "due_time", "status", "project")

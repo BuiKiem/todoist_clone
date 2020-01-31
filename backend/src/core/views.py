@@ -6,18 +6,8 @@ from . import models
 from . import serializers
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
-
-    queryset = models.Project.objects.all()
-    serializer_classes = {
-        "list": serializers.ProjectRetrieveSerializer,
-        "create": serializers.ProjectCreateSerializer,
-        "retrieve": serializers.ProjectRetrieveSerializer,
-        "update": serializers.ProjectUpdateSerializer,
-        "partial_update": serializers.ProjectUpdateSerializer,
-        # TODO: Remove later
-        "metadata": serializers.ProjectRetrieveSerializer
-    }
+class CustomModelViewSet(viewsets.ModelViewSet):
+    serializer_classes = None
 
     def create(self, request: Request, *args, **kwargs) -> Response:
         serializer = self.get_serializer(data=request.data)
@@ -54,7 +44,25 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return self.serializer_classes[self.action]
 
 
-class TaskViewSet(viewsets.ModelViewSet):
-    http_method_names = ["get"]
+class ProjectViewSet(CustomModelViewSet):
+    queryset = models.Project.objects.all()
+    serializer_classes = {
+        "list": serializers.ProjectRetrieveSerializer,
+        "create": serializers.ProjectCreateSerializer,
+        "retrieve": serializers.ProjectRetrieveSerializer,
+        "update": serializers.ProjectUpdateSerializer,
+        "partial_update": serializers.ProjectUpdateSerializer,
+        # TODO: Remove later
+        "metadata": serializers.ProjectRetrieveSerializer
+    }
+
+
+class TaskViewSet(CustomModelViewSet):
     queryset = models.Task.objects.all()
-    serializer_class = serializers.TaskResponseSerializer
+    serializer_classes = {
+        "list": serializers.TaskResponseSerializer,
+        "create": serializers.TaskCreateSerializer,
+        "retrieve": serializers.TaskResponseSerializer,
+        "update": serializers.TaskUpdateSerializer,
+        "partial_update": serializers.TaskUpdateSerializer
+    }
