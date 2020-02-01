@@ -4,10 +4,10 @@ import { List, ListItem } from "@material-ui/core";
 import { Task } from "../Task/Task";
 import { TasksSkeleton } from "./Tasks.skeleton";
 
-import {useTasks} from "../../hooks";
+import { useTasks } from "../../hooks";
 
 export const Tasks = () => {
-  const {data: tasks, loading, error} = useTasks();
+  const { data: tasks, loading, error } = useTasks();
 
   return (
     <List subheader={<h2>[Project Name]</h2>}>

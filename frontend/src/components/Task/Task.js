@@ -1,8 +1,9 @@
 import React from "react";
+import moment from "moment";
 import { Grid, Typography, Tooltip } from "@material-ui/core";
 import { FiberManualRecord as RadioButtonUncheckedIcon } from "@material-ui/icons";
 
-export const Task = ({ task }) => {
+export const Task = ({ task: { name, due_time, project } }) => {
   return (
     <Grid container>
       <Grid item xs={1}>
@@ -10,17 +11,17 @@ export const Task = ({ task }) => {
       </Grid>
       <Grid item xs={5}>
         <Typography variant="subtitle2" component="p">
-          {task.name}
+          {name}
         </Typography>
         <Tooltip color="primary" title="31 Jan" arrow placement="bottom-start">
           <Typography variant="body2" component="p">
-            {task.due_time}
+            {moment(due_time).fromNow()}
           </Typography>
         </Tooltip>
       </Grid>
       <Grid item xs={6}>
         <Typography variant="body2" component="p">
-          {task.project}
+          {project}
           <RadioButtonUncheckedIcon
             color="primary"
             fontSize="small"

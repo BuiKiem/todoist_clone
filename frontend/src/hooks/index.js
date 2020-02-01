@@ -25,5 +25,5 @@ export const useTasks = () => {
     fetchTasks();
   }, []);
 
-  return {data, loading, error}
+  return { data, loading, error };
 };
