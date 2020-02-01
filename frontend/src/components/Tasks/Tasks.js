@@ -1,33 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { List, ListItem } from "@material-ui/core";
-
-import { axiosConn } from "../../axios";
 
 import { Task } from "../Task/Task";
 import { TasksSkeleton } from "./Tasks.skeleton";
 
+import {useTasks} from "../../hooks";
+
 export const Tasks = () => {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const fetchTasks = async () => {
-      setLoading(true);
-      setError(false);
-      try {
-              const result = await axiosConn.get("api/tasks/");
-      setTasks(result.data);
-
-      } catch (e) {
-        setError(true)
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTasks();
-  }, []);
+  const {data: tasks, loading, error} = useTasks();
 
   return (
     <List subheader={<h2>[Project Name]</h2>}>
