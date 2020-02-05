@@ -3,6 +3,8 @@ from datetime import timedelta
 from django_filters import rest_framework
 from django.utils.timezone import now
 
+from . import models
+
 
 class CustomDateRangeFilter(rest_framework.DateRangeFilter):
     """
@@ -35,3 +37,7 @@ class CustomDateRangeFilter(rest_framework.DateRangeFilter):
 
 class TaskFilter(rest_framework.FilterSet):
     due_day = CustomDateRangeFilter(field_name="due_time")
+
+    class Meta:
+        model = models.Task
+        fields = ("project", "due_day")

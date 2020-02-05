@@ -3,6 +3,7 @@ import datetime
 import django_filters
 from rest_framework import viewsets, status
 from rest_framework.request import Request
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from . import models, serializers, filters
@@ -67,6 +68,15 @@ class TaskViewSet(CustomModelViewSet):
         "retrieve": serializers.TaskResponseSerializer,
         "update": serializers.TaskUpdateSerializer,
         "partial_update": serializers.TaskUpdateSerializer,
+        "inbox": serializers.TaskResponseSerializer,
     }
     filter_backends = (django_filters.rest_framework.DjangoFilterBackend,)
     filterset_class = filters.TaskFilter
+
+    @action(detail=False, methods=["GET"])
+    def inbox(self, request: Request):
+        inbox_tasks = models.Task.objects.filter(project__isnull=True)
+
+        serializers = self.get_serializer_class()(inbox_tasks, many=True)
+
+        return Response(serializers.data)

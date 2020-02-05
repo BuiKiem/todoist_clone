@@ -55,7 +55,7 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     project = models.ForeignKey(
-        "Project", on_delete=models.CASCADE, related_name="tasks"
+        "Project", on_delete=models.CASCADE, related_name="tasks", null=True
     )
 
     def __str__(self) -> str:

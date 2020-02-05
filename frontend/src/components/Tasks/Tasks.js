@@ -1,16 +1,21 @@
 import React from "react";
 import { List, ListItem } from "@material-ui/core";
 
+import { useStyles } from "./Tasks.styles";
+
 import { Task } from "../Task/Task";
 import { TasksSkeleton } from "./Tasks.skeleton";
 
 import { useTasks } from "../../hooks";
+import { useSelectedProjectContext } from "../../contexts/selectedProjectContext";
 
 export const Tasks = () => {
-  const { data: tasks, loading, error } = useTasks();
+  const { selectedProject } = useSelectedProjectContext();
+  const { data: tasks, loading, error } = useTasks(selectedProject);
+  const classes = useStyles();
 
   return (
-    <List subheader={<h2>[Project Name]</h2>}>
+    <List subheader={<h2>{selectedProject.name}</h2>} className={classes.root}>
       {error && <p>Something went wrong</p>}
       {loading ? (
         <TasksSkeleton />
